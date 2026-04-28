@@ -60,7 +60,11 @@ export default function Base64Converter() {
         // UTF-8 aware encoding
         const encoder = new TextEncoder();
         const bytes = encoder.encode(val);
-        let b64 = btoa(String.fromCharCode(...bytes));
+        let binary = "";
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        let b64 = btoa(binary);
         
         if (urlSafe) b64 = b64.replace(/\+/g, '-').replace(/\//g, '_');
         if (!padding) b64 = b64.replace(/=+$/, '');

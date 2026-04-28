@@ -3,16 +3,16 @@
 import React, { useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { tools } from "@/lib/tools";
-import { Copy, Hash, RefreshCcw, MapPin, Globe, Users, PlayCircle, Instagram, Twitter, Linkedin, Youtube, Share2 } from "lucide-react";
+import { Copy, Hash, RefreshCcw, MapPin, Globe, Users, PlayCircle, Camera, Video, Share2 } from "lucide-react";
 
 type Platform = "Instagram" | "TikTok" | "Twitter" | "LinkedIn" | "YouTube";
 
 const PLATFORM_CONFIG = {
-  Instagram: { count: 28, icon: Instagram },
+  Instagram: { count: 28, icon: Camera },
   TikTok: { count: 8, icon: PlayCircle },
-  Twitter: { count: 3, icon: Twitter },
-  LinkedIn: { count: 4, icon: Linkedin },
-  YouTube: { count: 6, icon: Youtube },
+  Twitter: { count: 3, icon: Globe },
+  LinkedIn: { count: 4, icon: Share2 },
+  YouTube: { count: 6, icon: Video },
 };
 
 const MODIFIERS = {
