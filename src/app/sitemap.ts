@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { tools } from "@/lib/tools";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://utilitylab.com";
+  const baseUrl = "https://www.utilitylabs.xyz";
 
   // Static routes
   const staticRoutes = [

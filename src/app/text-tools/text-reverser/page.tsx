@@ -103,7 +103,7 @@ export default function TextReverser() {
               <li><strong>Reverse Word Order:</strong> Keeps individual words intact but flips their sequence in the sentence. This is often used in linguistics, data parsing, or creative writing experiments.</li>
             </ul>
             <p>
-              <strong>Privacy and Speed:</strong> Unlike other online tools that process your data on remote servers, UtilityLab runs entirely on your local machine. Your text never leaves your browser, ensuring total privacy even when working with sensitive snippets.
+              <strong>Privacy and Speed:</strong> Unlike other online tools that process your data on remote servers, UtilityLabs runs entirely on your local machine. Your text never leaves your browser, ensuring total privacy even when working with sensitive snippets.
             </p>
           </div>
         </div>

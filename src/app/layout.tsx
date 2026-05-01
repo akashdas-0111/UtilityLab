@@ -17,8 +17,16 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "UtilityLab | Professional Tools & Utilities",
+  metadataBase: new URL("https://www.utilitylabs.xyz"),
+  title: "UtilityLabs | Professional Tools & Utilities",
   description: "A comprehensive suite of professional calculators, converters, and developer utilities for everyday tasks.",
+  openGraph: {
+    title: "UtilityLabs | Professional Tools & Utilities",
+    description: "High-performance digital tools for developers and professionals.",
+    url: "https://www.utilitylabs.xyz",
+    siteName: "UtilityLabs",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

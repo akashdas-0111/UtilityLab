@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
                 Privacy by Design
               </h2>
               <p>
-                At <strong>UtilityLab</strong>, your privacy is our top priority. We believe that your data belongs to you. 
+                At <strong>UtilityLabs</strong>, your privacy is our top priority. We believe that your data belongs to you. 
                 Most of our tools, including calculators, text converters, and image optimizers, process your data 
                 <strong> entirely within your web browser</strong>. This means your files and inputs never leave your computer 
                 and are never uploaded to our servers.
@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
             <section>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Information We Collect</h2>
               <p>
-                Like most websites, UtilityLab uses log files. These files merely log visitors to the site – usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and possibly the number of clicks.
+                Like most websites, UtilityLabs uses log files. These files merely log visitors to the site – usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and possibly the number of clicks.
               </p>
             </section>
 

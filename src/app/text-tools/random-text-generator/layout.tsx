@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Random Text Generator | Placeholder Text & Lorem Ipsum | UtilityLab",
+  title: "Random Text Generator | Placeholder Text & Lorem Ipsum | UtilityLabs",
   description: "Generate random words, sentences, and paragraphs for your design mockups and testing. Customizable length and one-click copy. Fast and free online tool.",
 };
 

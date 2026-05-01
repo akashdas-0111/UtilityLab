@@ -128,7 +128,7 @@ export default function CaseConverter() {
               <li><strong>Inverse Case:</strong> Flips the case of every character (uPPER to Lower).</li>
             </ul>
             <p>
-              Like all tools at UtilityLab, your text is processed entirely within your browser using JavaScript. No data is sent to external servers, ensuring your content remains private and secure.
+              Like all tools at UtilityLabs, your text is processed entirely within your browser using JavaScript. No data is sent to external servers, ensuring your content remains private and secure.
             </p>
           </div>
         </div>

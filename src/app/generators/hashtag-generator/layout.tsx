@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hashtag Generator | Viral Tags for Instagram, TikTok & more | UtilityLab",
+  title: "Hashtag Generator | Viral Tags for Instagram, TikTok & more | UtilityLabs",
   description: "Generate optimized, platform-specific hashtags for Instagram, TikTok, LinkedIn, and Twitter. Categorized by trending, medium, and niche competition. Free and private.",
 };
 

@@ -15,7 +15,7 @@ export default function AboutPage() {
             Empowering Your <span className="text-indigo-600">Digital Workflow</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            UtilityLab is a collection of high-performance, privacy-focused tools designed for developers, 
+            UtilityLabs is a collection of high-performance, privacy-focused tools designed for developers, 
             designers, and professionals who value speed and simplicity.
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
           <p className="text-lg text-indigo-100 max-w-2xl mx-auto mb-8 leading-relaxed">
             We believe that professional tools should be accessible to everyone, without compromising 
-            on privacy or user experience. UtilityLab is our contribution to a faster, safer, 
+            on privacy or user experience. UtilityLabs is our contribution to a faster, safer, 
             and more productive web.
           </p>
           <div className="flex justify-center gap-4">

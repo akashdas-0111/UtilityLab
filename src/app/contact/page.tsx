@@ -68,7 +68,7 @@ export default function ContactPage() {
                   <Mail size={20} />
                 </div>
                 <h3 className="font-bold text-gray-900 dark:text-white mb-1">Email Us</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">hello@utilitylab.com</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">hello@utilitylabs.xyz</p>
               </div>
               <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
                 <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 mb-4 flex items-center justify-center">

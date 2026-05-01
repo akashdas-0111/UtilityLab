@@ -27,7 +27,7 @@ export function Footer() {
                 <Rocket size={20} />
               </div>
               <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Utility<span className="text-indigo-600 dark:text-indigo-400">Lab</span>
+                Utility<span className="text-indigo-600 dark:text-indigo-400">Labs</span>
               </span>
             </Link>
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -108,7 +108,7 @@ export function Footer() {
         {/* Bottom Line */}
         <div className="mt-12 md:mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500 dark:text-gray-500 text-center md:text-left">
-            © {new Date().getFullYear()} UtilityLab. All rights reserved. Designed for excellence.
+            © {new Date().getFullYear()} UtilityLabs. All rights reserved. Designed for excellence.
           </p>
           <div className="flex gap-6">
             <Link href="#" className="text-xs text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">

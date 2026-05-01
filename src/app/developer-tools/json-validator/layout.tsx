@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "JSON Validator | Check & Debug JSON Online | UtilityLab",
+  title: "JSON Validator | Check & Debug JSON Online | UtilityLabs",
   description: "Validate your JSON code instantly with clear error messages and syntax highlighting. Fast, free, and 100% private developer tool.",
 };
 

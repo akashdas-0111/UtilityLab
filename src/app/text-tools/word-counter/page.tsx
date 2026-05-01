@@ -114,7 +114,7 @@ export default function WordCounter() {
               Why does this matter? Many platforms have strict character or word limits. For example, Twitter (now X) has specific character caps, while SEO meta descriptions should ideally stay between 150-160 characters. Academic assignments often require a minimum word count while strictly forbidding you from exceeding a certain limit. Our tool ensures you stay within these boundaries without the need for manual counting or constantly switching between windows.
             </p>
             <p>
-              Privacy is a core pillar of UtilityLab. Unlike many online word counters that send your text to their servers for processing, our Word Counter runs **entirely in your browser**. Your text never leaves your device, making it safe for processing sensitive documents, private emails, or proprietary code snippets.
+              Privacy is a core pillar of UtilityLabs. Unlike many online word counters that send your text to their servers for processing, our Word Counter runs **entirely in your browser**. Your text never leaves your device, making it safe for processing sensitive documents, private emails, or proprietary code snippets.
             </p>
             <p>
               Advanced features like the "Copy" and "Clear" buttons help streamline your workflow. Once you've refined your text to the perfect length, a single click copies everything to your clipboard, ready to be pasted into your final document. If you're starting a new project, the "Clear" button resets the workspace instantly.

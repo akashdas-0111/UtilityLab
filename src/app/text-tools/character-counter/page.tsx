@@ -83,7 +83,7 @@ export default function CharacterCounter() {
               While most word processors have built-in counters, they are often buried in menus or don't provide real-time updates as you type. Our tool is built for the web, meaning it's accessible from any device, requires no installation, and offers a distraction-free environment for quick edits.
             </p>
             <p>
-              <strong>Privacy Guaranteed:</strong> Just like all tools at UtilityLab, your text is processed entirely in your browser. We don't store your input on our servers, making it safe for handling sensitive information.
+              <strong>Privacy Guaranteed:</strong> Just like all tools at UtilityLabs, your text is processed entirely in your browser. We don't store your input on our servers, making it safe for handling sensitive information.
             </p>
           </div>
         </div>

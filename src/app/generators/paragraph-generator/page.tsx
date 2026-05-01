@@ -138,7 +138,7 @@ export default function ParagraphGenerator() {
               <li><strong>Custom Length:</strong> Generate exactly as many paragraphs as your layout requires, from a single intro block to a full-length article mockup.</li>
             </ul>
             <p>
-              <strong>Data Privacy:</strong> As with all UtilityLab tools, your generation happens locally in your browser. We don't track your topics or save your generated content.
+              <strong>Data Privacy:</strong> As with all UtilityLabs tools, your generation happens locally in your browser. We don't track your topics or save your generated content.
             </p>
           </div>
         </div>

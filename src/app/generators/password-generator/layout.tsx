@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Password Generator | Secure & Random Password Creator | UtilityLab",
+  title: "Password Generator | Secure & Random Password Creator | UtilityLabs",
   description: "Create military-grade secure passwords instantly. Customizable length, character types, and real-time strength analysis. 100% private and free.",
 };
 

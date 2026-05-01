@@ -121,7 +121,7 @@ export default function WhitespaceRemover() {
               <li><strong>Remove Line Breaks:</strong> Converts multi-line text into a single continuous block, replacing line breaks with single spaces for readability.</li>
             </ul>
             <p>
-              <strong>Data Privacy:</strong> Like all tools on the UtilityLab platform, your data is processed 100% locally in your browser. We never upload your text to our servers, making this tool safe for sensitive developer configs, private emails, and proprietary data.
+              <strong>Data Privacy:</strong> Like all tools on the UtilityLabs platform, your data is processed 100% locally in your browser. We never upload your text to our servers, making this tool safe for sensitive developer configs, private emails, and proprietary data.
             </p>
           </div>
         </div>

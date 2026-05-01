@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Word Counter | Free Online Writing Tool | UtilityLab",
+  title: "Word Counter | Free Online Writing Tool | UtilityLabs",
   description: "Count words, characters, sentences, and paragraphs in real-time. Estimate reading time and improve your writing productivity with our free, private online word counter.",
 };
 
