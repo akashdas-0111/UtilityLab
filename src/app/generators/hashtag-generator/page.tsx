@@ -1,222 +1,162 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { tools } from "@/lib/tools";
-import { Copy, Hash, RefreshCcw, MapPin, Globe, Users, PlayCircle, Camera, Video, Share2 } from "lucide-react";
+import { 
+  Hash, 
+  RefreshCcw, 
+  Copy, 
+  CheckCircle2, 
+  Zap, 
+  TrendingUp, 
+  Search,
+  Trash2,
+  Instagram,
+  Twitter,
+  Plus
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-type Platform = "Instagram" | "TikTok" | "Twitter" | "LinkedIn" | "YouTube";
-
-const PLATFORM_CONFIG = {
-  Instagram: { count: 28, icon: Camera },
-  TikTok: { count: 8, icon: PlayCircle },
-  Twitter: { count: 3, icon: Globe },
-  LinkedIn: { count: 4, icon: Share2 },
-  YouTube: { count: 6, icon: Video },
-};
-
-const MODIFIERS = {
-  Trending: ["viral", "trending", "explorepage", "fyp", "reels", "shorts", "explore", "popular"],
-  Medium: ["community", "tips", "tricks", "hacks", "guide", "tutorial", "lifestyle", "daily"],
-  Niche: ["experts", "pro", "mastery", "learning", "innovation", "specialist", "creative", "studio"],
+const HASHTAG_MAP: Record<string, string[]> = {
+  "tech": ["technology", "innovation", "future", "coding", "software", "ai", "webdev", "digital", "gadgets", "programming"],
+  "business": ["entrepreneur", "startup", "success", "marketing", "growth", "finance", "strategy", "leadership", "work", "goals"],
+  "fitness": ["gym", "workout", "motivation", "health", "lifestyle", "training", "bodybuilding", "crossfit", "yoga", "fit"],
+  "food": ["cooking", "recipe", "delicious", "yum", "homemade", "foodie", "healthyfood", "dinner", "breakfast", "chef"],
+  "travel": ["adventure", "explore", "nature", "vacation", "photography", "wanderlust", "trip", "mountain", "beach", "world"],
+  "art": ["artist", "drawing", "painting", "design", "creative", "illustration", "digitalart", "sketch", "artwork", "gallery"],
+  "music": ["musician", "song", "playlist", "concert", "performance", "sound", "producer", "studio", "live", "beat"]
 };
 
 export default function HashtagGenerator() {
-  const [topic, setTopic] = useState("");
-  const [platform, setPlatform] = useState<Platform>("Instagram");
-  const [audience, setAudience] = useState("Professionals");
-  const [contentType, setContentType] = useState("Educational");
-  const [location, setLocation] = useState("");
-  const [results, setResults] = useState<{ category: string; tags: string[] }[]>([]);
+  const tool = tools.find((t) => t.id === "hashtag-generator")!;
 
-  const tool = tools.find(t => t.id === "hashtag-generator")!;
+  // State
+  const [keyword, setKeyword] = useState("");
+  const [hashtags, setHashtags] = useState<string[]>([]);
+  const [copied, setCopied] = useState(false);
 
-  const generateHashtags = () => {
-    if (!topic) return;
-
-    const cleanTopic = topic.trim().toLowerCase().replace(/\s+/g, "");
-    const totalCount = PLATFORM_CONFIG[platform].count;
+  const generate = () => {
+    if (!keyword.trim()) {
+      setHashtags([]);
+      return;
+    }
     
-    // Distribution: 30% Trending, 40% Medium, 30% Niche
-    const trendingCount = Math.max(1, Math.floor(totalCount * 0.3));
-    const mediumCount = Math.max(1, Math.floor(totalCount * 0.4));
-    const nicheCount = totalCount - trendingCount - mediumCount;
-
-    const generateGroup = (mods: string[], count: number) => {
-      const groupTags = new Set<string>();
-      while (groupTags.size < count) {
-        const mod = mods[Math.floor(Math.random() * mods.length)];
-        const loc = location ? location.trim().toLowerCase().replace(/\s+/g, "") : "";
-        
-        const patterns = [
-          `#${cleanTopic}${mod}`,
-          `#${mod}${cleanTopic}`,
-          `#${cleanTopic}`,
-          loc ? `#${cleanTopic}${loc}` : `#${cleanTopic}life`,
-          `#${cleanTopic}${platform.toLowerCase()}`,
-        ];
-        
-        groupTags.add(patterns[Math.floor(Math.random() * patterns.length)]);
-      }
-      return Array.from(groupTags);
-    };
-
-    setResults([
-      { category: "Trending (High Popularity)", tags: generateGroup(MODIFIERS.Trending, trendingCount) },
-      { category: "Medium Competition", tags: generateGroup(MODIFIERS.Medium, mediumCount) },
-      { category: "Niche (Low Competition)", tags: generateGroup(MODIFIERS.Niche, nicheCount) },
-    ]);
+    const key = keyword.toLowerCase().trim();
+    let base = HASHTAG_MAP[key] || [key, `${key}life`, `${key}oftheday`, `${key}gram`, `best${key}`, `love${key}`, `${key}art`];
+    
+    // Add common viral hashtags
+    const viral = ["trending", "viral", "explorepage", "instadaily", "instagood"];
+    const results = [...new Set([...base, ...viral])].map(tag => `#${tag}`);
+    setHashtags(results.sort(() => Math.random() - 0.5));
   };
 
-  const handleCopy = (tags: string[]) => {
-    navigator.clipboard.writeText(tags.join(" "));
-  };
+  useEffect(() => {
+    const timer = setTimeout(generate, 300);
+    return () => clearTimeout(timer);
+  }, [keyword]);
 
-  const handleCopyAll = () => {
-    const allTags = results.flatMap(r => r.tags).join(" ");
-    navigator.clipboard.writeText(allTags);
+  const copyAll = () => {
+    navigator.clipboard.writeText(hashtags.join(" "));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
-        {/* Input Form */}
-        <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <Hash size={14} className="text-indigo-600" /> Topic / Keyword
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Digital Marketing, Cooking, Tech"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <Share2 size={14} className="text-indigo-600" /> Platform
-              </label>
-              <select
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold"
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value as Platform)}
-              >
-                {Object.keys(PLATFORM_CONFIG).map(p => <option key={p} value={p}>{p}</option>)}
-              </select>
-            </div>
+      <div className="space-y-10">
+        
+        {/* Input Card */}
+        <div className="bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-12 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform text-indigo-500">
+            <Hash size={120} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                <Users size={14} /> Audience
+          <div className="space-y-6 relative z-10">
+            <div className="flex items-center justify-between px-1">
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                <Search size={14} className="text-indigo-600" />
+                Seed Keyword
               </label>
-              <input
-                type="text"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                value={audience}
-                onChange={(e) => setAudience(e.target.value)}
-              />
+              <button onClick={() => setKeyword("")} className="text-gray-300 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                <PlayCircle size={14} /> Content Type
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                value={contentType}
-                onChange={(e) => setContentType(e.target.value)}
+            <div className="relative">
+              <input 
+                value={keyword} onChange={(e) => setKeyword(e.target.value)}
+                className="w-full px-8 py-6 bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-indigo-600 rounded-[2rem] outline-none text-2xl font-black transition-all"
+                placeholder="e.g. Technology, Fitness, Travel..."
               />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                <MapPin size={14} /> Location (Optional)
-              </label>
-              <input
-                type="text"
-                placeholder="Global"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                 <button 
+                  onClick={copyAll}
+                  disabled={hashtags.length === 0}
+                  className={`px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${copied ? 'bg-emerald-500 text-white shadow-lg' : 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95 disabled:opacity-50'}`}
+                 >
+                   {copied ? "Copied!" : "Copy All"}
+                 </button>
+              </div>
             </div>
           </div>
-
-          <button
-            onClick={generateHashtags}
-            disabled={!topic}
-            className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-3 disabled:opacity-50"
-          >
-            <RefreshCcw size={20} />
-            Generate Optimized Hashtags
-          </button>
         </div>
 
-        {/* Results Area */}
-        {results.length > 0 && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Generated Hashtags for {platform}</h2>
-              <button 
-                onClick={handleCopyAll}
-                className="text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-2"
-              >
-                <Copy size={16} /> Copy All Tags
-              </button>
-            </div>
+        {/* Suggestion Chips */}
+        <div className="flex flex-wrap gap-2 px-2">
+          {["Tech", "Business", "Fitness", "Food", "Travel", "Art", "Music"].map(tag => (
+            <button 
+              key={tag}
+              onClick={() => setKeyword(tag)}
+              className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-[10px] font-black text-gray-400 uppercase tracking-widest rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-all"
+            >
+              # {tag}
+            </button>
+          ))}
+        </div>
 
-            <div className="grid grid-cols-1 gap-6">
-              {results.map((res, idx) => (
-                <div key={idx} className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                      idx === 0 ? "bg-red-50 text-red-600" : idx === 1 ? "bg-amber-50 text-amber-600" : "bg-emerald-50 text-emerald-600"
-                    }`}>
-                      {res.category}
-                    </span>
-                    <button 
-                      onClick={() => handleCopy(res.tags)}
-                      className="text-xs text-gray-400 hover:text-indigo-600 transition-colors"
-                    >
-                      Copy Category
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {res.tags.map(tag => (
-                      <span key={tag} className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm font-mono text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+        {/* Results Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <AnimatePresence mode="popLayout">
+            {hashtags.map((tag) => (
+              <motion.div 
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                key={tag}
+                className="bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center justify-between group hover:border-indigo-600/50 transition-all cursor-pointer"
+                onClick={() => navigator.clipboard.writeText(tag)}
+              >
+                <span className="text-sm font-black text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 transition-colors">{tag}</span>
+                <Plus size={14} className="text-gray-300 group-hover:text-indigo-600 group-hover:rotate-90 transition-all" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-indigo-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-indigo-600/20 flex items-start gap-4">
+            <div className="p-3 bg-indigo-500 rounded-2xl">
+              <TrendingUp size={24} />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-black">Viral Reach</h4>
+              <p className="text-sm text-indigo-100 opacity-80 leading-relaxed">
+                Automatically injects high-performing viral hashtags into every search result 
+                to maximize your chances of appearing on explore pages.
+              </p>
             </div>
           </div>
-        )}
-
-        {/* SEO Content */}
-        <div className="mt-16 pt-12 border-t border-gray-100 dark:border-gray-800">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">
-            Master Social Media with Smart Hashtags
-          </h2>
-          <div className="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed space-y-6">
-            <p>
-              Using the right hashtags can be the difference between a post that goes viral and one that disappears into the void. Our **Hashtag Generator** is built on a sophisticated algorithm that understands the unique requirements of each major social platform.
-            </p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Platform-Specific Strategies:</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Instagram:</strong> We provide up to 30 tags across three categories to maximize your reach while maintaining relevance.</li>
-              <li><strong>TikTok:</strong> Focused on a mix of high-trending FYP tags and niche topic tags for maximum algorithmic impact.</li>
-              <li><strong>LinkedIn:</strong> Professional, clean tags focused on industry keywords and community visibility.</li>
-              <li><strong>Twitter:</strong> Concise selection of 2-3 high-impact tags to preserve character count and focus.</li>
-            </ul>
-            <p>
-              <strong>Pro Tip:</strong> Always mix high-competition "Trending" tags with "Niche" tags. High-competition tags get you initial views, but niche tags help you rank and find your actual target audience.
-            </p>
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-start gap-4">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl text-emerald-600">
+              <Zap size={24} />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-black text-gray-900 dark:text-white">Smart Mapping</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Our algorithm analyzes your keyword to suggest niche and specific tags that 
+                help you target the right audience.
+              </p>
+            </div>
           </div>
         </div>
       </div>

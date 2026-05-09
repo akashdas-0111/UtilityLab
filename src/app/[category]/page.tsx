@@ -10,44 +10,49 @@ import { AdUnit } from "@/components/ad-unit";
 // Map URL paths to tool categories or tags
 const categoryMap: Record<string, { title: string; description: string; filter: (t: any) => boolean }> = {
   "calculators": {
-    title: "Professional Calculators",
-    description: "Financial, mathematical, and health-related calculators for precise results.",
-    filter: (t) => t.path.startsWith("/calculators") || t.category === "Calculators",
+    title: "Financial & Daily Calculators",
+    description: "SIP, EMI, Tax, and investment tools for precise financial planning.",
+    filter: (t) => t.category === "Calculators",
+  },
+  "math-tools": {
+    title: "Mathematical & Scientific Utilities",
+    description: "Algebra solvers, unit converters, statistics, and number theory tools.",
+    filter: (t) => t.category === "Math",
   },
   "developer-tools": {
     title: "Developer Utilities",
-    description: "Essential tools for developers: JSON, UUID, RegEx, and Base64.",
-    filter: (t) => t.path.startsWith("/developer-tools") || t.category === "Validators" || t.category === "Generators" || t.category === "Converters",
+    description: "JSON, JWT, SQL, and system debuggers for professional engineering.",
+    filter: (t) => t.category === "Developer" || t.category === "Validators",
   },
   "text-tools": {
-    title: "Text & Content Tools",
-    description: "Manipulate text, generate placeholder content, and convert cases.",
-    filter: (t) => t.path.startsWith("/text-tools") || t.name.toLowerCase().includes("text") || t.name.toLowerCase().includes("lorem"),
+    title: "Text & Content Mastery",
+    description: "Manipulate strings, generate placeholder content, and clean data.",
+    filter: (t) => t.category === "Text",
   },
   "image-tools": {
-    title: "Image Utilities",
-    description: "Convert, optimize, and generate images and icons.",
-    filter: (t) => t.path.startsWith("/image-tools") || t.name.toLowerCase().includes("image") || t.name.toLowerCase().includes("svg"),
+    title: "Image & Visual Utilities",
+    description: "Professional-grade cropping, resizing, and color extraction tools.",
+    filter: (t) => t.category === "Image",
   },
-  "pdf": {
-    title: "PDF Utilities",
-    description: "Tools to manage and convert PDF documents (Coming Soon).",
-    filter: (t) => t.path.startsWith("/pdf") || t.name.toLowerCase().includes("pdf"),
+  "seo-tools": {
+    title: "SEO & Content Strategy",
+    description: "Meta generators, keyword analysis, and sitemap creators for digital growth.",
+    filter: (t) => t.category === "SEO",
   },
-  "generators": {
-    title: "Smart Generators",
-    description: "Generate passwords, usernames, and other random data instantly.",
-    filter: (t) => t.path.startsWith("/generators") || t.category === "Generators",
+  "networking-tools": {
+    title: "Network Diagnostics",
+    description: "IP lookup, header checking, and connectivity audit tools.",
+    filter: (t) => t.category === "Networking",
   },
   "converters": {
-    title: "Format Converters",
-    description: "Convert between different file formats and data types.",
-    filter: (t) => t.path.startsWith("/converters") || t.category === "Converters",
+    title: "Universal Format Converters",
+    description: "Seamlessly switch between data types, units, and media formats.",
+    filter: (t) => t.category === "Converters",
   },
-  "micro-tools": {
-    title: "Micro Utilities",
-    description: "Quick single-purpose tools for everyday tasks.",
-    filter: (t) => t.path.startsWith("/micro-tools") || (t.popular === false && !t.path.includes("calculators")),
+  "validators": {
+    title: "Diagnostic & Validation Tools",
+    description: "Ensure the integrity and correctness of your data, code, and configurations.",
+    filter: (t) => t.category === "Validators" || t.name.toLowerCase().includes("validator") || t.name.toLowerCase().includes("checker"),
   }
 };
 

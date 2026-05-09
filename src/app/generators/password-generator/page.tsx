@@ -14,7 +14,7 @@ export default function PasswordGenerator() {
   const [includeSymbols, setIncludeSymbols] = useState(true);
   const [strength, setStrength] = useState({ score: 0, label: "Very Weak", color: "bg-red-500" });
 
-  const tool = tools.find(t => t.id === "password-gen")!;
+  const tool = tools.find(t => t.id === "password-generator")!;
 
   const generatePassword = useCallback(() => {
     let charset = "";

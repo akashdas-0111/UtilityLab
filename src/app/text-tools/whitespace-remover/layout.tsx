@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Whitespace Remover | Clean Extra Spaces & Line Breaks | UtilityLabs",
-  description: "Remove extra spaces, all spaces, or line breaks from your text instantly. Real-time preview and one-click copy. Private and free online text tool.",
+  title: "Whitespace Remover - Clean & Trim Text Instantly | UtilityLab",
+  description: "Remove extra spaces, tabs, and empty lines from your text effortlessly. Clean up code, data lists, or messy documents with our professional whitespace tool.",
+  keywords: "whitespace remover, trim text, remove empty lines, clean text, text formatter, developer tools, data cleaning",
 };
 
-export default function WhitespaceRemoverLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

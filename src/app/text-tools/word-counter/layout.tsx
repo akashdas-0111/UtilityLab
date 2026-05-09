@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Word Counter | Free Online Writing Tool | UtilityLabs",
-  description: "Count words, characters, sentences, and paragraphs in real-time. Estimate reading time and improve your writing productivity with our free, private online word counter.",
+  title: "Word Counter - Advanced Text Analysis Tool | UtilityLab",
+  description: "Get detailed statistics on your text including word count, character count, reading time, and keyword density. Essential for SEO, writers, and students.",
+  keywords: "word counter, character counter, text analysis, reading time calculator, keyword density, writing tools, seo tools",
 };
 
-export default function WordCounterLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

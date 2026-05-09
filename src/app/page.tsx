@@ -24,11 +24,11 @@ import { tools, Tool } from "@/lib/tools";
 
 const categoryCards = [
   { name: "Calculators", description: "SIP, EMI, Tax & Loans", icon: Calculator, color: "text-blue-600", bg: "bg-blue-50 dark:bg-blue-900/20", path: "/calculators" },
-  { name: "PDF Tools", description: "Convert, Merge & Edit", icon: FileText, color: "text-red-600", bg: "bg-red-50 dark:bg-red-900/20", path: "/pdf" },
-  { name: "Image Tools", description: "Optimize & Convert", icon: ImageIcon, color: "text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-900/20", path: "/image-tools" },
+  { name: "Math Tools", description: "Algebra, Stats & Units", icon: Activity, color: "text-rose-600", bg: "bg-rose-50 dark:bg-rose-900/20", path: "/math-tools" },
+  { name: "Image Tools", description: "Crop, Resize & Color", icon: ImageIcon, color: "text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-900/20", path: "/image-tools" },
   { name: "Text Tools", description: "Case, Lorem & Slugs", icon: Zap, color: "text-orange-600", bg: "bg-orange-50 dark:bg-orange-900/20", path: "/text-tools" },
-  { name: "Developer Tools", description: "JSON, UUID & Regex", icon: Code, color: "text-indigo-600", bg: "bg-indigo-50 dark:bg-indigo-900/20", path: "/developer-tools" },
-  { name: "Micro Tools", description: "Quick Single Utilities", icon: Terminal, color: "text-cyan-600", bg: "bg-cyan-50 dark:bg-cyan-900/20", path: "/micro-tools" },
+  { name: "Developer Tools", description: "JSON, JWT & Debugging", icon: Code, color: "text-indigo-600", bg: "bg-indigo-50 dark:bg-indigo-900/20", path: "/developer-tools" },
+  { name: "SEO & Content", description: "Meta, Sitemap & Ideas", icon: Globe, color: "text-cyan-600", bg: "bg-cyan-50 dark:bg-cyan-900/20", path: "/seo-tools" },
 ];
 
 export default function Home() {

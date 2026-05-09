@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "URL Encoder & Decoder | Smart URL Parser & Debugger | UtilityLabs",
-  description: "Safely encode and decode URL parameters. Features smart URL breakdown, query parameter editor, and normalization for UTM/tracking removal.",
+  title: "URL Encoder & Decoder - Clean Your Links | UtilityLab",
+  description: "Quickly encode or decode URLs to ensure they are web-safe. Convert special characters into percent-encoded format and back. Essential for web developers.",
+  keywords: "url encoder, url decoder, percent encoding, uri converter, web developer tools, secure links",
 };
 
-export default function UrlConverterLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

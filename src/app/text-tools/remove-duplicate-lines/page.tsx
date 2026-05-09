@@ -1,141 +1,166 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { tools } from "@/lib/tools";
-import { Copy, Trash2, ListFilter, Check, Settings2 } from "lucide-react";
+import { 
+  List, 
+  Trash2, 
+  Copy, 
+  CheckCircle2, 
+  Zap, 
+  RefreshCcw, 
+  Settings2,
+  SortAsc,
+  SortDesc,
+  Filter,
+  Check
+} from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function RemoveDuplicateLines() {
-  const [text, setText] = useState("");
-  const [caseSensitive, setCaseSensitive] = useState(false);
-  const [trimWhitespace, setTrimWhitespace] = useState(true);
-  
-  const tool = tools.find(t => t.id === "remove-duplicate-lines")!;
+export default function DuplicateLineRemover() {
+  const tool = tools.find((t) => t.id === "remove-duplicates")!;
 
-  const { resultText, originalCount, resultCount } = useMemo(() => {
-    const lines = text.split(/\n/);
-    const originalCount = text.trim() ? lines.length : 0;
+  // State
+  const [text, setText] = useState("Apple\nOrange\nApple\nBanana\nOrange\nGrape");
+  const [copied, setCopied] = useState(false);
+  const [options, setOptions] = useState({
+    caseSensitive: true,
+    trim: true,
+    sort: "none" as "none" | "asc" | "desc"
+  });
+
+  const process = () => {
+    let lines = text.split('\n');
     
-    if (!text.trim()) {
-      return { resultText: "", originalCount: 0, resultCount: 0 };
+    if (options.trim) {
+      lines = lines.map(line => line.trim());
     }
 
-    const seen = new Set();
-    const resultLines = lines.filter(line => {
-      let processed = line;
-      if (trimWhitespace) processed = processed.trim();
-      if (!caseSensitive) processed = processed.toLowerCase();
-      
-      if (seen.has(processed)) return false;
-      seen.add(processed);
-      return true;
-    });
+    const uniqueLines = Array.from(new Set(
+      options.caseSensitive 
+        ? lines 
+        : lines.map(line => line.toLowerCase())
+    ));
 
-    return {
-      resultText: resultLines.join("\n"),
-      originalCount,
-      resultCount: resultLines.length
-    };
-  }, [text, caseSensitive, trimWhitespace]);
+    // Map back to original case if not case sensitive (heuristic)
+    let resultLines = options.caseSensitive 
+      ? uniqueLines 
+      : Array.from(new Set(lines.map(line => {
+          const lower = line.toLowerCase();
+          return lines.find(l => l.toLowerCase() === lower) || line;
+        })));
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(resultText);
+    if (options.sort === "asc") {
+      resultLines.sort((a, b) => a.localeCompare(b));
+    } else if (options.sort === "desc") {
+      resultLines.sort((a, b) => b.localeCompare(a));
+    }
+
+    setText(resultLines.join('\n'));
   };
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
-        {/* Stats and Options Row */}
-        <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm">
-          <div className="flex gap-8">
-            <div className="text-center lg:text-left">
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{originalCount}</p>
-              <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Original Lines</p>
-            </div>
-            <div className="text-center lg:text-left">
-              <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{resultCount}</p>
-              <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Unique Lines</p>
-            </div>
+      <div className="space-y-10">
+        
+        {/* Settings Bar */}
+        <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+           <div className="flex flex-wrap items-center gap-4">
+             <label className="flex items-center gap-2 cursor-pointer group">
+               <div className={`w-10 h-6 rounded-full transition-all relative ${options.caseSensitive ? 'bg-indigo-600' : 'bg-gray-200'}`}>
+                 <input type="checkbox" className="hidden" checked={options.caseSensitive} onChange={() => setOptions({...options, caseSensitive: !options.caseSensitive})} />
+                 <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${options.caseSensitive ? 'left-5' : 'left-1'}`} />
+               </div>
+               <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Case Sensitive</span>
+             </label>
+
+             <div className="flex bg-gray-50 dark:bg-gray-800 p-2 rounded-2xl border border-gray-100 dark:border-gray-700">
+               {[
+                 { id: "none", icon: Filter, label: "Unsorted" },
+                 { id: "asc", icon: SortAsc, label: "A-Z" },
+                 { id: "desc", icon: SortDesc, label: "Z-A" }
+               ].map(opt => (
+                 <button 
+                  key={opt.id}
+                  onClick={() => setOptions({...options, sort: opt.id as any})}
+                  className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${options.sort === opt.id ? 'bg-white dark:bg-gray-700 shadow-lg text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+                 >
+                   <opt.icon size={12} /> {opt.label}
+                 </button>
+               ))}
+             </div>
+           </div>
+
+           <button 
+            onClick={process}
+            className="px-8 py-3 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+           >
+             <Check size={16} /> Deduplicate Now
+           </button>
+        </div>
+
+        {/* Editor Area */}
+        <div className="bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-12 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform text-indigo-500">
+            <List size={120} />
           </div>
 
-          <div className="flex flex-wrap gap-4 items-center">
-            <label className="flex items-center gap-2 cursor-pointer group">
-              <div className={`w-10 h-6 rounded-full transition-all relative ${caseSensitive ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'}`}>
-                <input 
-                  type="checkbox" 
-                  className="sr-only" 
-                  checked={caseSensitive}
-                  onChange={() => setCaseSensitive(!caseSensitive)}
-                />
-                <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${caseSensitive ? 'translate-x-4' : ''}`} />
+          <div className="space-y-8 relative z-10">
+            <div className="relative">
+              <div className="absolute top-6 right-6 z-10 flex gap-2">
+                <button 
+                  onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
+                  className={`p-4 rounded-2xl transition-all shadow-xl ${copied ? "bg-emerald-500 text-white" : "bg-white dark:bg-gray-700 text-gray-400 hover:text-indigo-600"}`}
+                >
+                  {copied ? <CheckCircle2 size={24}/> : <Copy size={24}/>}
+                </button>
+                <button 
+                  onClick={() => setText("")}
+                  className="p-4 bg-white dark:bg-gray-700 text-gray-400 hover:text-rose-600 rounded-2xl shadow-xl transition-all"
+                >
+                  <Trash2 size={24} />
+                </button>
               </div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 transition-colors">Case Sensitive</span>
-            </label>
-
-            <label className="flex items-center gap-2 cursor-pointer group">
-              <div className={`w-10 h-6 rounded-full transition-all relative ${trimWhitespace ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'}`}>
-                <input 
-                  type="checkbox" 
-                  className="sr-only" 
-                  checked={trimWhitespace}
-                  onChange={() => setTrimWhitespace(!trimWhitespace)}
-                />
-                <div className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${trimWhitespace ? 'translate-x-4' : ''}`} />
-              </div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 transition-colors">Trim Whitespace</span>
-            </label>
+              <textarea 
+                value={text} onChange={(e) => setText(e.target.value)}
+                spellCheck={false}
+                className="w-full min-h-[500px] p-12 bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-indigo-600 rounded-[3rem] outline-none text-xl font-bold leading-relaxed resize-none transition-all shadow-inner"
+                placeholder="Enter your list here, one item per line..."
+              />
+            </div>
+            
+            <div className="flex justify-between px-2">
+               <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Total Lines: {text.split('\n').filter(l => l.length > 0).length}</span>
+            </div>
           </div>
         </div>
 
-        {/* Text Areas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between px-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Input Text</label>
-              <button onClick={() => setText("")} className="text-xs text-red-500 hover:underline">Clear</button>
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-start gap-4">
+            <div className="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl text-indigo-600">
+              <RefreshCcw size={24} />
             </div>
-            <textarea
-              className="w-full h-96 p-6 rounded-2xl bg-gray-50 dark:bg-gray-800/30 border-2 border-gray-100 dark:border-gray-800 focus:border-indigo-500 outline-none transition-all resize-none text-sm font-mono"
-              placeholder="Paste your list here..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            ></textarea>
-          </div>
-          
-          <div className="space-y-3">
-            <div className="flex items-center justify-between px-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Result</label>
-              <button onClick={handleCopy} className="text-xs text-indigo-600 hover:underline flex items-center gap-1">
-                <Copy size={12} /> Copy Result
-              </button>
+            <div className="space-y-1">
+              <h4 className="font-black text-gray-900 dark:text-white">Smart Deduplication</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Remove accidental duplicates from large datasets, email lists, or code exports 
+                with optional sorting and case sensitivity controls.
+              </p>
             </div>
-            <textarea
-              className="w-full h-96 p-6 rounded-2xl bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 outline-none transition-all resize-none text-sm font-mono text-gray-800 dark:text-gray-200"
-              readOnly
-              value={resultText}
-              placeholder="Unique lines will appear here..."
-            ></textarea>
           </div>
-        </div>
-
-        {/* SEO Content */}
-        <div className="mt-16 pt-12 border-t border-gray-100 dark:border-gray-800">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">
-            Clean your lists with our Remove Duplicates tool
-          </h2>
-          <div className="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed space-y-6">
-            <p>
-              Managing large datasets, email lists, or code snippets often leads to accidental duplicates. Our **Remove Duplicate Lines** tool is a fast, efficient, and privacy-focused solution for cleaning up your data in seconds.
-            </p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Smart Filtering Options:</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Case Sensitivity:</strong> Toggle whether "Apple" and "apple" should be treated as the same line.</li>
-              <li><strong>Trim Whitespace:</strong> Automatically remove leading and trailing spaces before comparing lines. This ensures that " Line " and "Line" are correctly identified as duplicates.</li>
-              <li><strong>Real-time Stats:</strong> See exactly how many lines were removed and what your new list size is.</li>
-            </ul>
-            <p>
-              <strong>Developers & Marketers:</strong> This tool is perfect for cleaning up CSV columns, removing duplicate CSS selectors, or refining prospect lists. Since all operations happen in your browser, your sensitive data is never uploaded to any server.
-            </p>
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm flex items-start gap-4">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl text-emerald-600">
+              <Settings2 size={24} />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-black text-gray-900 dark:text-white">Data Cleaning</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Automatically trim whitespace from each line to ensure perfect matches, even 
+                if lines have trailing spaces or tabs.
+              </p>
+            </div>
           </div>
         </div>
       </div>

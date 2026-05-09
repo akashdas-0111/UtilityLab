@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Remove Duplicate Lines | Online List Cleaner | UtilityLabs",
-  description: "Quickly remove duplicate lines from lists and text files. Customizable case sensitivity and whitespace trimming. Fast, private, and free online tool.",
+  title: "Duplicate Line Remover - Clean Your Lists Fast | UtilityLab",
+  description: "Quickly remove duplicate lines from any list or document. Sort your results alphabetically and clean up your data instantly. 100% browser-based.",
+  keywords: "remove duplicate lines, clean list, deduplicate text, sort list, list cleaner, data cleaning tools, developer tools",
 };
 
-export default function RemoveDuplicateLinesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

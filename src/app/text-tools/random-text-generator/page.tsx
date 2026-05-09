@@ -14,7 +14,7 @@ export default function RandomTextGenerator() {
   const [unit, setUnit] = useState<"words" | "sentences" | "paragraphs">("words");
   const [result, setResult] = useState("");
   
-  const tool = tools.find(t => t.id === "random-text-generator")!;
+  const tool = tools.find(t => t.id === "random-text-gen")!;
 
   const generateText = () => {
     let output = "";

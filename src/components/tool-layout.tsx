@@ -46,19 +46,19 @@ export function ToolLayout({ tool, children }: ToolLayoutProps) {
                   <div className="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20">
                     <Zap size={28} />
                   </div>
-                  <div>
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                      {tool.name}
-                    </h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-400">
-                      {tool.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <span className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold">
-                    {tool.category}
-                  </span>
+          <div>
+            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight break-words">
+              {tool.name}
+            </h1>
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 mt-1 line-clamp-2 md:line-clamp-none">
+              {tool.description}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <span className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-wider">
+            {tool.category}
+          </span>
                   {tool.popular && (
                     <span className="px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold flex items-center gap-1">
                       <Star size={12} fill="currentColor" /> Popular

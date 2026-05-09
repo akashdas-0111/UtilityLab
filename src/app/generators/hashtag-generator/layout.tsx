@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hashtag Generator | Viral Tags for Instagram, TikTok & more | UtilityLabs",
-  description: "Generate optimized, platform-specific hashtags for Instagram, TikTok, LinkedIn, and Twitter. Categorized by trending, medium, and niche competition. Free and private.",
+  title: "Hashtag Generator - Grow Your Social Media Reach | UtilityLab",
+  description: "Boost your social media visibility with our intelligent hashtag generator. Discover popular, trending, and niche hashtags for Instagram, TikTok, and Twitter.",
+  keywords: "hashtag generator, instagram hashtags, tiktok hashtags, social media tools, marketing tools, grow followers",
 };
 
-export default function HashtagGeneratorLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
